@@ -100,14 +100,14 @@ fs.readdir(directoryPath, (err, files) => {
     console.log(`total match fish: ${data.GEN.totalMatchFish}`);
 
     console.log('\nTEAM ONE:');
-    Object.keys(data.ONE.totalWinCodes).forEach((code, i) => {console.log(`win code '${code}' (${(code == '2') ? "win" : (code == '1') ? "tie" : "lost"}): ${data.ONE.totalWinCodes[code]} => ${Math.round((data.ONE.totalWinCodes[code] / data.GEN.matches * 100) * 100) / 100}%`)});
-    console.log(`total fish: ${data.ONE.totalFish} || average fish per match: ${data.ONE.totalFish / data.GEN.matches} => ${Math.round((data.ONE.totalFish / data.GEN.totalMatchFish * 100) * 100) / 100}%`);
-    Object.keys(data.ONE.totalCauses).forEach((cause, i) => {console.log(`cause for exit '${cause}': ${data.ONE.totalCauses[cause]} => ${Math.round((data.ONE.totalCauses[cause] / data.GEN.matches * 100) * 100) / 100}%`)});
-    Object.keys(data.ONE.totalReasons).forEach((reason, i) => {console.log(`reason for exit '${reason}': ${data.ONE.totalReasons[reason]} => ${Math.round((data.ONE.totalReasons[reason] / data.GEN.matches * 100) * 100) / 100}%`)});
+    Object.keys(data.ONE.totalWinCodes).forEach((code, i) => {console.log(`win code '${code}' (${(code == '2') ? "win" : (code == '1') ? "tie" : "lost"}): ${data.ONE.totalWinCodes[code]} => ${data.ONE.totalWinCodes[code] / data.GEN.matches * 100}%`)});
+    console.log(`total fish: ${data.ONE.totalFish} || average fish per match: ${data.ONE.totalFish / data.GEN.matches} => ${data.ONE.totalFish / data.GEN.totalMatchFish * 100}%`);
+    Object.keys(data.ONE.totalCauses).forEach((cause, i) => {console.log(`cause for exit '${cause}': ${data.ONE.totalCauses[cause]} => ${data.ONE.totalCauses[cause] / data.GEN.matches * 100}%`)});
+    Object.keys(data.ONE.totalReasons).forEach((reason, i) => {console.log(`reason for exit '${reason}': ${data.ONE.totalReasons[reason]} => ${data.ONE.totalReasons[reason] / data.GEN.matches * 100}%`)});
 
     console.log('\nTEAM TWO:');
-    Object.keys(data.TWO.totalWinCodes).forEach((code, i) => {console.log(`win code '${code}' (${(code == '2') ? "win" : (code == '1') ? "tie" : "lost"}): ${data.TWO.totalWinCodes[code]} => ${Math.round((data.TWO.totalWinCodes[code] / data.GEN.matches * 100) * 100) / 100}%`)});
-    console.log(`total fish: ${data.TWO.totalFish} || average fish per match: ${data.TWO.totalFish / data.GEN.matches} => ${Math.round((data.TWO.totalFish / data.GEN.totalMatchFish * 100) * 100) / 100}%`);
-    Object.keys(data.TWO.totalCauses).forEach((cause, i) => {console.log(`cause for exit '${cause}': ${data.TWO.totalCauses[cause]} => ${Math.round((data.TWO.totalCauses[cause] / data.GEN.matches * 100) * 100) / 100}%`)});
-    Object.keys(data.TWO.totalReasons).forEach((reason, i) => {console.log(`reason for exit '${reason}': ${data.TWO.totalReasons[reason]} => ${Math.round((data.TWO.totalReasons[reason] / data.GEN.matches * 100) * 100) / 100}%`)});
+    Object.keys(data.TWO.totalWinCodes).forEach((code, i) => {console.log(`win code '${code}' (${(code == '2') ? "win" : (code == '1') ? "tie" : "lost"}): ${data.TWO.totalWinCodes[code]} => ${data.TWO.totalWinCodes[code] / data.GEN.matches * 100}%`)});
+    console.log(`total fish: ${data.TWO.totalFish} || average fish per match: ${data.TWO.totalFish / data.GEN.matches} => ${data.TWO.totalFish / data.GEN.totalMatchFish * 100}%`);
+    Object.keys(data.TWO.totalCauses).forEach((cause, i) => {console.log(`cause for exit '${cause}': ${data.TWO.totalCauses[cause]} => ${data.TWO.totalCauses[cause] / data.GEN.matches * 100}%`)});
+    Object.keys(data.TWO.totalReasons).forEach((reason, i) => {console.log(`reason for exit '${reason}': ${data.TWO.totalReasons[reason]} => ${data.TWO.totalReasons[reason] / data.GEN.matches * 100}%`)});
 });
