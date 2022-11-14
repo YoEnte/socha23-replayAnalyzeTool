@@ -3,7 +3,8 @@ const fs = require('fs');
 const xmlReader = require('xml-reader');
 const xmlQuery = require('xml-query');
 
-const directoryPath = path.join(__dirname, 'replays');
+const directoryPath = '';
+const logEveryMatch = true;
 
 fs.readdir(directoryPath, (err, files) => {
 
@@ -71,11 +72,13 @@ fs.readdir(directoryPath, (err, files) => {
         });
 
         // log each game:
-        console.log(`GAME ${f + 1}: ${file}`);
-        console.log(`GENERAL: moves: ${data.GEN.moves[f]}`);
-        console.log(`TEAM ONE: win code: ${data.ONE.winCodes[f]}, fish: ${data.ONE.fishPerGame[f]}, exits: ${data.ONE.causes[f]}, reasons: ${data.ONE.reasons[f]}`);
-        console.log(`TEAM TWO: win code: ${data.TWO.winCodes[f]}, fish: ${data.TWO.fishPerGame[f]}, exits: ${data.TWO.causes[f]}, reasons: ${data.TWO.reasons[f]}`);
-        console.log("");
+        if (logEveryMatch) {
+            console.log(`GAME ${f + 1}: ${file}`);
+            console.log(`GENERAL: moves: ${data.GEN.moves[f]}`);
+            console.log(`TEAM ONE: win code: ${data.ONE.winCodes[f]}, fish: ${data.ONE.fishPerGame[f]}, exits: ${data.ONE.causes[f]}, reasons: ${data.ONE.reasons[f]}`);
+            console.log(`TEAM TWO: win code: ${data.TWO.winCodes[f]}, fish: ${data.TWO.fishPerGame[f]}, exits: ${data.TWO.causes[f]}, reasons: ${data.TWO.reasons[f]}`);
+            console.log("");
+        }
     });
 
     // calc totals for overview

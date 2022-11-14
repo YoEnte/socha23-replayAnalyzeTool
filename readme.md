@@ -3,7 +3,11 @@ this is a replay analyse tool for the german software challenge 23
 npm install xml-reader
 npm install xml-query
 
-put replays.xml in "replays" folder (there are already five examples)
+put replays.xml in "replays" folder or every other folder 
+set 'directoryPath' to the absolute path of the folder with the replays
+
+set 'logEveryMatch' (bool) if every match should be summarized and logged
+
 run node index.js
 
 if you want to export to external file run: 'node index.js > outputFile.xyz'
