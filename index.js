@@ -6,7 +6,7 @@ const xmlQuery = require('xml-query');
 const directoryPath = 'C:\\Users\\antho\\OneDrive\\.Coding\\Wettbewerbe\\Software_Challenge\\22-23\\stuff\\software-challenge-server\\replays';
 const logEveryMatch = false;
 const logProgress = true;
-const logProgressNumber = 1;
+const logProgressNumber = 10;
 const logProgressClear = true;
 const summarizeTimeStart = Date.now();
 
@@ -120,9 +120,6 @@ fs.readdir(directoryPath, (err, files) => {
     const summarizeTimeMin = Math.floor(summarizeTime / 60000);
     const summarizeTimeSec = ((summarizeTime % 60000) / 1000).toFixed(0);
 
-    data.GEN.totalMoves = data.GEN.moves.reduce((a, b) => a + b, 0);
-    data.GEN.totalMatchFish = data.ONE.totalFish + data.TWO.totalFish;
-
     data.ONE.totalWinCodes = data.ONE.winCodes.reduce((accumulator, value) => {return {...accumulator, [value]: (accumulator[value] || 0) + 1}}, {});
     data.ONE.totalFish = data.ONE.fishPerGame.reduce((a, b) => a + b, 0);
     data.ONE.totalCauses = data.ONE.causes.reduce((accumulator, value) => {return {...accumulator, [value]: (accumulator[value] || 0) + 1}}, {});
@@ -132,6 +129,9 @@ fs.readdir(directoryPath, (err, files) => {
     data.TWO.totalFish = data.TWO.fishPerGame.reduce((a, b) => a + b, 0);
     data.TWO.totalCauses = data.TWO.causes.reduce((accumulator, value) => {return {...accumulator, [value]: (accumulator[value] || 0) + 1}}, {});
     data.TWO.totalReasons = data.TWO.reasons.reduce((accumulator, value) => {return {...accumulator, [value]: (accumulator[value] || 0) + 1}}, {});
+
+    data.GEN.totalMoves = data.GEN.moves.reduce((a, b) => a + b, 0);
+    data.GEN.totalMatchFish = data.ONE.totalFish + data.TWO.totalFish;
 
     // log overview
     console.log('\n/////////////   OVERVIEW   /////////////\n');
