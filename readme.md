@@ -1,6 +1,7 @@
 this is a replay analyse tool for the german software challenge 23
 
-npm install xml-reader + npm install xml-query
+how to use:
+- npm install xml-reader + npm install xml-query
 
 - have replays.xml in a folder
 - set 'directoryPath' to the absolute path of the folder with the replays
@@ -10,8 +11,7 @@ npm install xml-reader + npm install xml-query
 - set 'logProgressNumber' (int) for how many matches should be summarized for progress bar update
 - set 'logProgressClear' (bool) if the console should be cleared (only if progress bar is active)
 
-
-run node index.js
+- run node index.js
 
 if you want to export to another file run: 'node index.js > outputFile.xyz' (logProgressClear does not work here)
 
