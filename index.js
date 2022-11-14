@@ -3,8 +3,12 @@ const fs = require('fs');
 const xmlReader = require('xml-reader');
 const xmlQuery = require('xml-query');
 
-const directoryPath = '';
-const logEveryMatch = true;
+const directoryPath = 'C:\\Users\\antho\\OneDrive\\.Coding\\Wettbewerbe\\Software_Challenge\\22-23\\stuff\\software-challenge-server\\replays';
+const logEveryMatch = false;
+const logProgress = true;
+const logProgressNumber = 1;
+const logProgressClear = true;
+const summarizeTimeStart = Date.now();
 
 fs.readdir(directoryPath, (err, files) => {
 
@@ -45,7 +49,7 @@ fs.readdir(directoryPath, (err, files) => {
         // get all moves for moveCount
         var moves = xq.find('lastMove').ast; // check
         data.GEN.moves.push(moves.length);
-
+        
         // player and score tags
         var players = xq.find('player').ast;
         var scores = xq.find('score').ast;
@@ -71,7 +75,37 @@ fs.readdir(directoryPath, (err, files) => {
             data[team].reasons.push(scores[i].attributes.reason);
         });
 
-        // log each game:
+        // log each game/progress:
+        if (logProgress && f % logProgressNumber == 0) {
+            var barPercent = Math.round((f / files.length * 100) * 100) / 100;
+            var barFill = '';
+            var barFillLength = 10;
+            var barFull = '';
+            var barEmpty = '';
+            var barLength = 80;
+            
+            // add empty space
+            for (var i = 0; i < barFillLength - barPercent.toString().length; i++) {
+                barFill += ' ';
+            }
+            
+            // add progress bar
+            for (var i = 0; i < barLength; i++) {
+                if (Math.floor(i / barLength * 100) < barPercent) {
+                    barFull  += '█';
+                } else {
+                    barEmpty += '░';
+                }
+            }
+
+            // log everything above
+            if (logProgressClear) {
+                console.clear();
+            }
+
+            console.log(`Progress: ${barPercent}%${barFill}${barFull}${barEmpty}`);
+        }
+
         if (logEveryMatch) {
             console.log(`GAME ${f + 1}: ${file}`);
             console.log(`GENERAL: moves: ${data.GEN.moves[f]}`);
@@ -82,6 +116,13 @@ fs.readdir(directoryPath, (err, files) => {
     });
 
     // calc totals for overview
+    const summarizeTime = Date.now() - summarizeTimeStart;
+    const summarizeTimeMin = Math.floor(summarizeTime / 60000);
+    const summarizeTimeSec = ((summarizeTime % 60000) / 1000).toFixed(0);
+
+    data.GEN.totalMoves = data.GEN.moves.reduce((a, b) => a + b, 0);
+    data.GEN.totalMatchFish = data.ONE.totalFish + data.TWO.totalFish;
+
     data.ONE.totalWinCodes = data.ONE.winCodes.reduce((accumulator, value) => {return {...accumulator, [value]: (accumulator[value] || 0) + 1}}, {});
     data.ONE.totalFish = data.ONE.fishPerGame.reduce((a, b) => a + b, 0);
     data.ONE.totalCauses = data.ONE.causes.reduce((accumulator, value) => {return {...accumulator, [value]: (accumulator[value] || 0) + 1}}, {});
@@ -92,12 +133,13 @@ fs.readdir(directoryPath, (err, files) => {
     data.TWO.totalCauses = data.TWO.causes.reduce((accumulator, value) => {return {...accumulator, [value]: (accumulator[value] || 0) + 1}}, {});
     data.TWO.totalReasons = data.TWO.reasons.reduce((accumulator, value) => {return {...accumulator, [value]: (accumulator[value] || 0) + 1}}, {});
 
-    data.GEN.totalMoves = data.GEN.moves.reduce((a, b) => a + b, 0);
-    data.GEN.totalMatchFish = data.ONE.totalFish + data.TWO.totalFish;
-
     // log overview
     console.log('\n/////////////   OVERVIEW   /////////////\n');
 
+    console.log('\nPROCESS DATA:');
+    console.log(`summarize time: ${summarizeTimeSec == 60 ? (summarizeTimeMin + 1) + ":00" : summarizeTimeMin + ":" + (summarizeTimeSec < 10 ? "0" : "") + summarizeTimeSec}`);
+
+    console.log('\nMATCH DATA:');
     console.log(`played matches: ${data.GEN.matches}`);
     console.log(`total matches moves: ${data.GEN.totalMoves} || average moves per match: ${Math.round((data.GEN.totalMoves / data.GEN.matches) * 100) / 100}`);
     console.log(`total matches fish: ${data.GEN.totalMatchFish}`);
